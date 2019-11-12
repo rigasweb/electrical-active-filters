@@ -6,4 +6,5 @@ In this implementation we design the following filters:
 - **BandPass Chebyshev Filter**
 - **BandElimination Chebyshev Filter**
 
+In the beginning of the codes we define the standards, the band of frequences and the gain of each filter.
 
