@@ -1,7 +1,6 @@
-%% Tzikas Tryfon Rigas
-%% 8589
+% Tzikas Tryfon Rigas
 
-%% HighPass Butterworth
+% HighPass Butterworth
 
 
 clear
@@ -31,37 +30,34 @@ n = (log10( (10^(a_min/10)-1) / (10^(a_max/10)-1) ) / (2*log10(W_s/W_p)) );
 
 n = ceil(n);
 
-%% sixnotita hmiseias isxios
 W_0= W_p / (10^(a_max/10) - 1)^(1/(2*n));
 w_0 = w_p / W_0;
 f_0 = w_0 / (2*pi);
 
-%% butterworth angles
+% butterworth angles
 y_k1 = 0;
 y_k2 = +36;
 y_k3 = -36;
 y_k4 = +72;
 y_k5 = -72;
 
-%% poloi
+% poloi
 p_1 = -1;
 p_2 = -0.809 + j*0.5877;
 p_3 = -0.809 - j*0.5877;
 p_4 = -0.309 + j*0.9510;
 p_5 = -0.309 - j*0.9510;
 
-%% w0, Q polwn 
+% w0, Q of poles 
 Q_1 = 0.5;
 
 Q_23 = 0.618;
 
 Q_45 = 1.618;
 
-%%
-% a2=5 ara strathgikh 2
-% a3=8 ara theloume puknwth 0.01 ìF
-% a4=9 ara kerdos 10 dB
-%% Prwth Monada 
+% we need capacitor 0.01 Ã¬F
+% we need gain 10 dB
+% First unit 
 C11 = 1; 
 R11 = 1;
 k_f1 = w_0;
@@ -70,7 +66,7 @@ C11 = 0.01 * 10^(-6);
 k_m1 = 1 / (k_f1 * C11);
 R11 = R11 * k_m1;
 
-%% Deuterh monada
+% Second Unit
 C21 = 1;
 C22 = 1;
 R21 = 1/(2*Q_23);
@@ -83,7 +79,7 @@ k_m2 = 1 / (k_f2 * C22);
 R21 = R21 * k_m2;
 R22 = R22 * k_m2;
 
-%% Trith monada
+% Third unit
 C31 = 1;
 C32 = 1;
 R31 = 1 / (2*Q_45);
@@ -96,7 +92,7 @@ k_m3 = 1 / (k_f3 * C32);
 R31 = k_m3 * R31;
 R32 = k_m3 * R32;
 
-%% Transfer functions
+% Transfer functions
 T1 = tf ([1 0], [1 w_0]);
 
 T2 = tf ([ k2 0 0], [1 w_0/Q_23 w_0^2]);
@@ -105,8 +101,7 @@ T3 = tf ([ k3 0 0], [1 w_0/Q_45 w_0^2]);
 
 T_all = T1*T2*T3 ;
 
-%% Total Gain
-% a_4=9 ara theloume 10 dB kerdos
+% Total Gain
 gain = abs(evalfr(T_all, w_0 * 1i));
 a_tf = (10^0.5)/gain;
 % a>1
@@ -132,8 +127,7 @@ plot_transfer_function(InvSys_new, [f_p f_s])
 InvSys_new1 = inv (T_total)
 plot_transfer_function(InvSys_new1, [f_p f_s])
 
-%% Fourier Analysis
-% a_4 = 9
+% Fourier Analysis
 f11= (0.2*w_s) / (2*pi);
 f12= (0.7*w_s) / (2*pi);
 f13= (1.6*w_p) / (2*pi);
