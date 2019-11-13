@@ -1,6 +1,6 @@
-%% Tzikas Tryfon Rigas
+% Tzikas Tryfon Rigas
 
-%% BandPass Chebyshev
+% BandPass Chebyshev
 
 
 clear
@@ -38,20 +38,20 @@ e = sqrt(10^(a_max/10)-1);
 a = (1/n)*asinh(1/e);
 W_hp = cosh(acosh(1/e)/n);
 
-%% Butterworth angles
+% Butterworth angles
 y_k1 = 22.5;
 y_k2 = -22.5;
 y_k3 = 67.5;
 y_k4 = -67.5;
 
-%% Chebyshev poles
+% Chebyshev poles
 s_1 = -sinh(a)*cosd(y_k1) + j*cosh(a)*sind(y_k1);
 s_2 = -sinh(a)*cosd(y_k2) + j*cosh(a)*sind(y_k2);
 s_3 = -sinh(a)*cosd(y_k3) + j*cosh(a)*sind(y_k3);
 s_4 = -sinh(a)*cosd(y_k4) + j*cosh(a)*sind(y_k4);
 
 
-%% First pole transformation
+% First pole transformation
 S_2 = abs(real(s_1));
 W_2 = abs(imag(s_1));
 % Geffe algorithm
@@ -66,7 +66,7 @@ W = k + sqrt(k^2-1);
 w_02 = W * w_0;
 w_01 = w_0 / W;
 
-%% Second pole transformation
+% Second pole transformation
 S_2 = abs(real(s_3));
 W_2 = abs(imag(s_3));
 % Geffe algorithm
@@ -81,11 +81,11 @@ W = k + sqrt(k^2-1);
 w_04 = W * w_0;
 w_03 = w_0 / W;
 
-%%
+%
 % we need capacitor 1.0 ìF
 % we need gain 5 dB
 % Q>>5 thus we use Q enchansement
-%% First unit
+% First unit
 C11 = 1;
 C12 = 1;
 b = 50;
@@ -112,7 +112,7 @@ R1B = R1B * k_m;
 %Z11 = R11 / a;
 %Z12 = R12 /(1-a);
 
-%% Second Unit
+% Second Unit
 C21 = 1;
 C22 = 1;
 b = 50;
@@ -139,7 +139,7 @@ R2B = R2B * k_m;
 %Z21 = R21 / a;
 %Z22 = R22 /(1-a);
 
-%% Third unit
+% Third unit
 C31 = 1;
 C32 = 1;
 b = 50;
@@ -166,7 +166,7 @@ R3B = R3B * k_m;
 %Z31 = R31 / a;
 %Z32 = R32 /(1-a);
 
-%% Forth unit
+% Fourth unit
 C41 = 1;
 C42 = 1;
 b = 50;
@@ -234,8 +234,7 @@ plot_transfer_function(InvSys_new, [f_1 f_2 f_3 f_4])
 
 InvSys_new1 = inv (T_total);
 plot_transfer_function(InvSys_new1, [f_1 f_2 f_3 f_4])
-
-%% Fourier Analysis
+% Fourier Analysis
 % a_4 = 9
 f11 = (w_0 - (w_0-w_1)/2) / (2*pi);
 f12 = (w_0 + (w_0+w_1)/3) / (2*pi);
