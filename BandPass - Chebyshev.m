@@ -1,5 +1,4 @@
 %% Tzikas Tryfon Rigas
-%% 8589
 
 %% BandPass Chebyshev
 
@@ -52,7 +51,7 @@ s_3 = -sinh(a)*cosd(y_k3) + j*cosh(a)*sind(y_k3);
 s_4 = -sinh(a)*cosd(y_k4) + j*cosh(a)*sind(y_k4);
 
 
-%% Metasxhmatismos prwtou polou
+%% First pole transformation
 S_2 = abs(real(s_1));
 W_2 = abs(imag(s_1));
 % Geffe algorithm
@@ -67,7 +66,7 @@ W = k + sqrt(k^2-1);
 w_02 = W * w_0;
 w_01 = w_0 / W;
 
-%% Metasxhmatismos deuterou polou
+%% Second pole transformation
 S_2 = abs(real(s_3));
 W_2 = abs(imag(s_3));
 % Geffe algorithm
@@ -83,11 +82,10 @@ w_04 = W * w_0;
 w_03 = w_0 / W;
 
 %%
-% a3=8 ara xrhsimopoioume strathgikh 1
-% a2=5 ara theloume puknwth 1.0 ìF
-% a4=9 ara kerdos 5 dB
-% omws Q>>5 ara tha xrhsimopoihsoyme Q enchansement
-%% Prwth Monada
+% we need capacitor 1.0 Ã¬F
+% we need gain 5 dB
+% Q>>5 thus we use Q enchansement
+%% First unit
 C11 = 1;
 C12 = 1;
 b = 50;
@@ -109,13 +107,12 @@ R1A = R1A * k_m;
 R1B = R1B * k_m;
 % we want gain: 5dB so 20*log(X) = 5 
 %k_desired = 10^0.25;
-% tha prepei na ginei exasthenisi tou kerdous
 %a = k_desired / H1;
 
 %Z11 = R11 / a;
 %Z12 = R12 /(1-a);
 
-%% Deuterh Monada
+%% Second Unit
 C21 = 1;
 C22 = 1;
 b = 50;
@@ -137,13 +134,12 @@ R2A = R2A * k_m;
 R2B = R2B * k_m;
 % we want gain: 5dB so 20*log(X) = 5 
 %k_desired = 1;
-% tha prepei na ginei exasthenisi tou kerdous
 %a = k_desired / H2;
 
 %Z21 = R21 / a;
 %Z22 = R22 /(1-a);
 
-%% Trith Monada
+%% Third unit
 C31 = 1;
 C32 = 1;
 b = 50;
@@ -165,13 +161,12 @@ R3A = R3A * k_m;
 R3B = R3B * k_m;
 % we want gain: 5dB so 20*log(X) = 5 
 %k_desired = 1;
-% tha prepei na ginei exasthenisi tou kerdous
 %a = k_desired / H3;
 
 %Z31 = R31 / a;
 %Z32 = R32 /(1-a);
 
-%% Tetarth Monada
+%% Forth unit
 C41 = 1;
 C42 = 1;
 b = 50;
@@ -194,7 +189,6 @@ R4B = R4B * k_m;
 
 % we want gain: 5dB so 20*log(X) = 5 
 %k_desired = 1;
-% tha prepei na ginei exasthenisi tou kerdous
 %a = k_desired / H4;
 
 %Z41 = R41 / a;
