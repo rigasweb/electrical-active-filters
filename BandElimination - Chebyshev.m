@@ -1,6 +1,6 @@
-%% Tzikas Tryfon Rigas
+% Tzikas Tryfon Rigas
 
-%% BandElimination Chebyshev
+% BandElimination Chebyshev
 
 
 clear
@@ -36,13 +36,13 @@ n = ceil(n);
 e = sqrt(10^(a_max/10)-1);
 a = (1/n)*asinh(1/e);
 W_hp = cosh(acosh(1/e)/n);
-%% Butterworth angles
+% Butterworth angles
 y_k1 = 22.5;
 y_k2 = -22.5;
 y_k3 = 67.5;
 y_k4 = -67.5;
 
-%% Chebyshev poles
+% Chebyshev poles
 s_1 = -sinh(a)*cosd(y_k1) + 1i*cosh(a)*sind(y_k1);
 s_2 = -sinh(a)*cosd(y_k2) + 1i*cosh(a)*sind(y_k2);
 s_3 = -sinh(a)*cosd(y_k3) + 1i*cosh(a)*sind(y_k3);
@@ -58,11 +58,11 @@ Q2 = W_02/(2*abs(real(s_3)));
 W_02 = 1 / W_02;
 y_2 = acosd(1/(2*W_02));
 
-%% New poles
+% New poles
 p_1 = -W_01/(2*Q1)+j*sqrt(W_01^2 - (W_01/(2*Q1))^2);
 p_3 = -W_02/(2*Q2)+j*sqrt(W_02^2 - (W_02/(2*Q2))^2);
 
-%% first pole transformation
+% first pole transformation
 S_2 = abs(real(p_1));
 W_2 = abs(imag(p_1));
 % Geffe algorithm
@@ -77,7 +77,7 @@ W = k + sqrt(k^2-1);
 w_02 = W * w_0;
 w_01 = w_0 / W;
 
-%% second pole transformation
+% second pole transformation
 S_2 = abs(real(p_3));
 W_2 = abs(imag(p_3));
 % Geffe algorithm
@@ -92,11 +92,11 @@ W = k + sqrt(k^2-1);
 w_04 = W * w_0;
 w_03 = w_0 / W;
 
-%%
+%
 % we use BoctorHighPass circuits
 % we need capacitor 0.01 ìF
 % we need gain 0 dB
-%% First unit -LPN
+% First unit -LPN
 w_z1 = w_0 / w_01;
 %0.5581<k_11<1
 k_11=0.7;
@@ -127,7 +127,7 @@ C12 = C12/(k_m1 * k_f1);
 %k1 = k_12 * (w_0)^2;
 k1 = k_12 * (w_z1)^2;
 
-%% Second Unit-HPN
+% Second Unit-HPN
 % you should use a HighPassNotch
 w_z2 = w_0 / w_02;
 k_21 = 1 / w_z2^2 - 1 ;
@@ -152,7 +152,7 @@ C23 = C23 /(k_m2 * k_f2);
 %k2 = k_22 * (w_0)^2;
 k2 = k_22 * (w_z2)^2;
 
-%% Third unit -LPN
+% Third unit -LPN
 w_z3 = w_0 / w_03;
 %0.7429<k_31<1
 k_31=0.8;
@@ -182,7 +182,7 @@ C32 = C32/(k_m3 * k_f3);
 
 %k3 = k_32* (w_0)^2;
 k3 = k_32* (w_z3)^2;
-%% Forth unit -HPN
+% Fourth unit -HPN
 % you should use a HighPassNotch
 w_z4 = w_0 / w_04;
 k_41 = 1/w_z4^2 - 1 ;
@@ -207,7 +207,7 @@ C42 = C42 /(k_m4 * k_f4);
 %k4 = k_42* (w_0)^2;
 k4 = k_42 * (w_z4)^2;
 
-%% Transfer Function
+% Transfer Function
 T1 = tf([k_12 0 k_12*w_0^2],[1 w_01/Q_1 w_01^2]);
 
 T2 = tf([k2 0 k2*w_0^2],[1 w_02/Q_1 w_02^2]);
@@ -218,7 +218,7 @@ T4 = tf([k4 0 k4*w_0^2],[1 w_04/Q_2 w_04^2]);
 
 T_all = T1*T2*T3*T4;
 
-%% Total Gain
+% Total Gain
 K_tot = k_12*k2*k_32*k4;
 gain = abs(evalfr(T_all, w_0 * 1i));
 a_tf = (1)/K_tot;
@@ -246,7 +246,7 @@ plot_transfer_function(InvSys, [f_1 f_2 f_3 f_4])
 InvSys_new1 = inv (T_total);
 plot_transfer_function(InvSys_new1, [f_0 f_1 f_2 f_3 f_4])
 
-%% Fourier Analysis
+% Fourier Analysis
 % a_4=9
 f11 = (w_0- (w_0-w_3)/2)/(2*pi);
 f12 = (w_0+(w_0+w_3)/3)/(2*pi);
