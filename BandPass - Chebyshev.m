@@ -194,7 +194,7 @@ R4B = R4B * k_m;
 %Z41 = R41 / a;
 %Z42 = R42 /(1-a);
 
-%% Transfer Function
+% Transfer Function
 T1 = tf( [0 H1*(w_01/Q_1) 0], [ 1, ( w_01 / Q_1), w_01^2 ] );
 
 T2 = tf( [0 H2*(w_02/Q_1) 0], [ 1, ( w_02 / Q_1), w_02^2 ] );
@@ -205,7 +205,7 @@ T4 = tf( [0 H4*(w_04/Q_2) 0], [ 1, ( w_04 / Q_2), w_04^2 ] );
 
 T_all = T1*T2*T3*T4;
 
-%% Total Gain
+% Total Gain
 K_total = H1*H2*H3*H4;
 gain = abs(evalfr(T_all, w_0 * 1i));
 
