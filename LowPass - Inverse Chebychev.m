@@ -1,7 +1,6 @@
-%% Tzikas Tryfon Rigas
-%% 8589
+% Tzikas Tryfon Rigas
 
-%% LowPass Inverse Chebyshev
+% LowPass Inverse Chebyshev
 
 
 clear
@@ -63,21 +62,19 @@ w_012 = InvW1;
 w_034 = InvW2;
 
 
-%ta mhdenika ths sunarthshs
 w_z1 = sec( pi / (2 * n));
 w_z3 = sec(3* pi / (2 * n));
 
 w_0 = w_p /(((10^(a_max/10)-1))^(1/(2*n)));
 f_0 = w_0/(2*pi);
 
-%ta pragmatika metra twn polwn
+
 w_12 = w_012 *w_s;
 w_34 = w_034 *w_s;
-%%
-% a3=8 ara xrhsimopoioume kanoniko Notch kuklwma
-% a4=9 ara theloume puknwth 1.0 ìF
-% a2=5 ara kerdos 10 dB
-%% Prwth Monada
+%
+% we need cpacitor 1.0 Ã¬F
+% we need gain 10 dB
+% First unit
 W_z1 = w_z1 / w_034;  % W_z1>1
 R11 = 1;
 R12 = 4 * Q_34^2;
@@ -91,7 +88,7 @@ k_l1 = k_h1 * (w_z1/w_034)^2; %keros stis xamhles syxnothtes
 k_f1 = w_s * w_034;
 k_m1 = 10^6 * C1 / k_f1;
 
-%klimakopoihsh
+%Normalization
 R11 = R11 * k_m1;
 R12 = R12 * k_m1;
 R13 = R13 * k_m1;
@@ -99,7 +96,7 @@ R14 = R14 * k_m1;
 R15 = R15 * k_m1;
 C1 = 10^(-6);
 
-%% Deuterh Monada
+%Second Unit
 W_z3 = w_z3 / w_012;  % W_z3>1
 R21 = 1;
 R22 = 4 * Q_12^2;
@@ -113,7 +110,7 @@ k_l2 = k_h2 * (w_z3/w_012)^2; %keros stis xamhles syxnothtes
 k_f2 = w_s * w_012;
 k_m2 = 10^6 * C2 / k_f2;
 
-%klimakopoihsh
+%normalization
 R21 = R21 * k_m2;
 R22 = R22 * k_m2;
 R23 = R23 * k_m2;
@@ -122,16 +119,16 @@ R25 = R25 * k_m2;
 C2 = 10^(-6);
 
 
-%% Transfer Function
+% Transfer Function
 T1 = tf([k_l2 0 k_l2*((w_z3*w_s)^2) ], [1, w_12/Q_12, w_12^2]);
 
 T2 = tf([k_l1 0 k_l1*((w_z1*w_s)^2) ], [1, w_34/Q_34, w_34^2]);
 
 T_all = T1 * T2;
 
-%% Total Gain
+% Total Gain
 k_total = k_l1 * k_l2;
-%klimakopoihsh
+%normalization
 gain = abs(evalfr(T_all, w_p * 1i));
 k_desired = 10^0.5;
 k = k_desired / gain;
@@ -159,7 +156,7 @@ plot_transfer_function(InvSys_new, [f_p f_s ])
 InvSys_new1 = inv(T_total)
 plot_transfer_function(InvSys_new1, [f_p f_s ])
 
-%% Fourier Analysis
+% Fourier Analysis
 fs= 2*10^3;
 T=0.2;
 dt=1/fs;
@@ -172,7 +169,6 @@ title('Sawtooth wave')
 xlabel('t (sec)')
 ylabel('Amplitude') 
 
-%dimiourgia twn fasmatwn fourier: eisodou kai eksodou
 N=T/dt;
 xt=lsim(T_all,x,t);
 figure
